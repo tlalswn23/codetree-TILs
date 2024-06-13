@@ -56,8 +56,7 @@ public class Main {
 		
 		// 4. 더 이상 이동할 수 없으면 
 		if(!checkRange(r, c)) { // 숲을 벗어나는 경우 
-			map = new int[R+1][C+1];
-			exit = new boolean[R+1][C+1];
+			initMap();
 		}else { // 숲을 벗어나지 않으면 맵에 정착 
 			for(int i = 0; i < 4; i++) {
 				int nx = r + direction[i][0];
@@ -145,6 +144,15 @@ public class Main {
 		}
 		
 		return row;
+	}
+	
+	static void initMap() {
+		for(int i = 0; i < R+1; i++) {
+			for(int j = 0; j < C+1; j++) {
+				map[i][j] = 0;
+				exit[i][j] = false;
+			}
+		}
 	}
 	
 	static void printMap(int[][] arr) {
