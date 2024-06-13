@@ -3,7 +3,8 @@ import java.io.*;
 
 public class Main {
 	static int R, C, K, total;
-	static int[][] map, exit;
+	static int[][] map;
+	static boolean[][] exit;
 	static int[][] direction = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 	static int[][] check = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 0}, {0, 1}, {1, 0}};
 	
@@ -16,13 +17,14 @@ public class Main {
 		C = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
 		map = new int[R+1][C+1];
-		exit = new int[R+1][C+1];
+		exit = new boolean[R+1][C+1];
 		
 		for(int i = 1; i < K+1; i++) {
 			st = new StringTokenizer(br.readLine());
 			int r = Integer.parseInt(st.nextToken());
 			int d = Integer.parseInt(st.nextToken());
 			
+//			System.out.println(0+" "+r+" "+d);
 			moveGolem(0, r, d, i); // 골렘 이동 함수 
 		}
 		
@@ -55,7 +57,7 @@ public class Main {
 		// 4. 더 이상 이동할 수 없으면 
 		if(!checkRange(r, c)) { // 숲을 벗어나는 경우 
 			map = new int[R+1][C+1];
-			exit = new int[R+1][C+1];
+			exit = new boolean[R+1][C+1];
 		}else { // 숲을 벗어나지 않으면 맵에 정착 
 			for(int i = 0; i < 4; i++) {
 				int nx = r + direction[i][0];
@@ -64,12 +66,14 @@ public class Main {
 				map[r][c] = n;
 			}
 			
-			exit[r + direction[d][0]][c + direction[d][1]] = n; // 출구 표시 
-			
+			exit[r + direction[d][0]][c + direction[d][1]] = true; // 출구 표시 
 			
 			// 골렘 층수 계산 
 			int row = findGolem(r, c, n);
 			total += row; // 골렘 위치 찾는 함수 
+			
+//			System.out.println(row);
+//			printMap(map);
 		}
 	}
 	
@@ -130,7 +134,7 @@ public class Main {
 					continue;
 				}
 				
-				if((map[nr][nc] != map[current[0]][current[1]]) && (exit[current[0]][current[1]] != map[current[0]][current[1]])) { // 다른 골렘으로 이동 but, 출구가 아니면 못감 
+				if((map[nr][nc] != map[current[0]][current[1]]) && !exit[current[0]][current[1]]) { // 다른 골렘으로 이동 but, 출구가 아니면 못감 
 					continue;
 				}
 				
