@@ -5,6 +5,8 @@ public class Main {
 	static int R, C, K, total;
 	static int[][] map, exit;
 	static int[][] direction = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+	static int[][] left = {{-1, 0}, {0, -1}, {1, 0}, {1, -1}, {1, 1}, {2, 0}};
+	static int[][] right = {{-1, 0}, {0, 1}, {-1, 0}, {1, 1}, {1, -1}, {2, 0}};
 	static int[][] check = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 0}, {0, 1}, {1, 0}};
 	
 	public static void main(String[] args) throws IOException{
@@ -42,7 +44,7 @@ public class Main {
 		}
 		
 		// 2. 왼쪽으로 내려가기 
-		if(canGo(r+1, c-1, d, n)) {
+		if(canGoLeft(r, c-1)) {
 			if(d == 0) {
 				d = 4;
 			}
@@ -52,7 +54,7 @@ public class Main {
 		}
 		
 		// 3. 오른쪽으로 내려가기 
-		if(canGo(r+1, c+1, d, n)) {
+		if(canGoRight(r, c+1)) {
 			if(d == 3) {
 				d = -1;
 			}
@@ -113,6 +115,41 @@ public class Main {
 		return true;
 	}
 	
+	static boolean canGoLeft(int r, int c) {
+		
+		for(int i = 0; i < 6; i++) {
+			int nr = r + left[i][0];
+			int nc = c + left[i][1];
+			
+			if(nr < 0 || nr > R || nc < 1 || nc > C) {
+				return false;
+			}
+			
+			if(map[nr][nc] != 0) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	static boolean canGoRight(int r, int c) {
+		
+		for(int i = 0; i < 6; i++) {
+			int nr = r + right[i][0];
+			int nc = c + right[i][1];
+			
+			if(nr < 0 || nr > R || nc < 1 || nc > C) {
+				return false;
+			}
+			
+			if(map[nr][nc] != 0) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 	// 골렘의 위치 찾기 - BFS
 	static int findGolem(int r, int c, int n) {
 		boolean[][] visited = new boolean[R+1][C+1];
