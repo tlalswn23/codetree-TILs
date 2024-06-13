@@ -23,7 +23,7 @@ public class Main {
 			int r = Integer.parseInt(st.nextToken());
 			int d = Integer.parseInt(st.nextToken());
 			
-			moveGolem(0, r, d, i); // 골렘 이동 함수 
+			moveGolem(1, r, d, i); // 골렘 이동 함수 
 		}
 		
 		bw.write(Integer.toString(total));
@@ -91,7 +91,7 @@ public class Main {
 			int nr = r + check[i][0];
 			int nc = c + check[i][1];
 			
-			if(nr < 0 || nr > R || nc < 1 || nc > C) {
+			if(nr < 1 || nr > R || nc < 1 || nc > C) {
 				return false;
 			}
 			
