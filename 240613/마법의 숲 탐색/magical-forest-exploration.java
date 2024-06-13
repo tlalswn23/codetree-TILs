@@ -130,7 +130,7 @@ public class Main {
 					continue;
 				}
 				
-				if(map[nr][nc] != map[current[0]][current[1]] && exit[current[0]][current[1]] != map[current[0]][current[1]]) { // 다른 골렘으로 이동 but, 출구가 아니면 못감 
+				if((map[nr][nc] != map[current[0]][current[1]]) && (exit[current[0]][current[1]] != map[current[0]][current[1]])) { // 다른 골렘으로 이동 but, 출구가 아니면 못감 
 					continue;
 				}
 				
