@@ -12,7 +12,7 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		R = Integer.parseInt(st.nextToken()) + 3;
+		R = Integer.parseInt(st.nextToken());
 		C = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
 		map = new int[R+3][C+1];
@@ -67,7 +67,7 @@ public class Main {
 			exit[r + direction[d][0]][c + direction[d][1]] = 1; // 출구 표시 
 			
 			// 골렘 층수 계산 
-			int row = findGolem(r, c, n) - 3;
+			int row = findGolem(r, c, n) - 2;
 			total += row; // 골렘 위치 찾는 함수 
 			
 //			System.out.println(row);
@@ -81,7 +81,7 @@ public class Main {
 			int nr = r + direction[d][0];
 			int nc = c + direction[d][1];
 			
-			if(nr < 3 || nr > R || nc < 1 || nc > C) {
+			if(nr < 3 || nr > R+2 || nc < 1 || nc > C) {
 				return false;
 			}
 		}
@@ -94,7 +94,7 @@ public class Main {
 			int nr = r + check[i][0];
 			int nc = c + check[i][1];
 			
-			if(nr < 0 || nr > R || nc < 1 || nc > C) {
+			if(nr < 0 || nr > R+2 || nc < 1 || nc > C) {
 				return false;
 			}
 			
@@ -109,7 +109,7 @@ public class Main {
 
 	// 골렘의 위치 찾기 - BFS
 	static int findGolem(int r, int c, int n) {
-		boolean[][] visited = new boolean[R+1][C+1];
+		boolean[][] visited = new boolean[R+3][C+1];
 		Queue<int[]> queue = new LinkedList<>();
 		int row = r;
 		queue.add(new int[] {r, c});
@@ -122,7 +122,7 @@ public class Main {
 				int nr = current[0] + direction[d][0];
 				int nc = current[1] + direction[d][1];
 				
-				if(nr < 3 || nr > R || nc < 1 || nc > C) {
+				if(nr < 3 || nr > R+2 || nc < 1 || nc > C) {
 					continue;
 				}
 				
@@ -148,7 +148,7 @@ public class Main {
 	}
 	
 	static void initMap() {
-		for(int i = 0; i < R+1; i++) {
+		for(int i = 0; i < R+3; i++) {
 			for(int j = 0; j < C+1; j++) {
 				map[i][j] = 0;
 				exit[i][j] = 0;
@@ -157,18 +157,8 @@ public class Main {
 	}
 	
 	static void printMap(int[][] arr) {
-		for(int i = 1; i <= R; i++) {
-			for(int j = 1; j <= C; j++) {
-				System.out.print(arr[i][j]+" ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-	}
-
-	static void printExit(boolean[][] arr) {
-		for(int i = 0; i <= R; i++) {
-			for(int j = 1; j <= C; j++) {
+		for(int i = 0; i < R+3; i++) {
+			for(int j = 1; j < C+1; j++) {
 				System.out.print(arr[i][j]+" ");
 			}
 			System.out.println();
