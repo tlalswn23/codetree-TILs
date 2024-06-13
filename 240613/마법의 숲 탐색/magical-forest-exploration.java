@@ -3,8 +3,7 @@ import java.io.*;
 
 public class Main {
 	static int R, C, K, total;
-	static int[][] map;
-	static boolean[][] exit;
+	static int[][] map, exit;
 	static int[][] direction = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 	static int[][] check = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 0}, {0, 1}, {1, 0}};
 	
@@ -17,7 +16,7 @@ public class Main {
 		C = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
 		map = new int[R+1][C+1];
-		exit = new boolean[R+1][C+1];
+		exit = new int[R+1][C+1];
 		
 		for(int i = 1; i < K+1; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -44,13 +43,20 @@ public class Main {
 		
 		// 2. 왼쪽으로 내려가기 
 		if(canGo(r+1, c-1, d, n)) {
-			moveGolem(r+1, c-1, (d+3)%4, n);
+			if(d == 0) {
+				d = 4;
+			}
+			
+			moveGolem(r+1, c-1, d-1, n);
 			return;
 		}
 		
 		// 3. 오른쪽으로 내려가기 
 		if(canGo(r+1, c+1, d, n)) {
-			moveGolem(r+1, c+1, (d+1)%4, n);
+			if(d == 3) {
+				d = -1;
+			}
+			moveGolem(r+1, c+1, d+1, n);
 			return;
 		}
 		
@@ -65,7 +71,7 @@ public class Main {
 				map[r][c] = n;
 			}
 			
-			exit[r + direction[d][0]][c + direction[d][1]] = true; // 출구 표시 
+			exit[r + direction[d][0]][c + direction[d][1]] = 1; // 출구 표시 
 			
 			// 골렘 층수 계산 
 			int row = findGolem(r, c, n);
@@ -73,6 +79,7 @@ public class Main {
 			
 //			System.out.println(row);
 //			printMap(map);
+//			printMap(exit);
 		}
 	}
 	
@@ -133,7 +140,7 @@ public class Main {
 					continue;
 				}
 				
-				if((map[nr][nc] != map[current[0]][current[1]]) && !exit[current[0]][current[1]]) { // 다른 골렘으로 이동 but, 출구가 아니면 못감 
+				if((map[nr][nc] != map[current[0]][current[1]]) && exit[current[0]][current[1]] == 0) { // 다른 골렘으로 이동 but, 출구가 아니면 못감 
 					continue;
 				}
 				
@@ -150,13 +157,13 @@ public class Main {
 		for(int i = 0; i < R+1; i++) {
 			for(int j = 0; j < C+1; j++) {
 				map[i][j] = 0;
-				exit[i][j] = false;
+				exit[i][j] = 0;
 			}
 		}
 	}
 	
 	static void printMap(int[][] arr) {
-		for(int i = 1; i <= R; i++) {
+		for(int i = 0; i <= R; i++) {
 			for(int j = 1; j <= C; j++) {
 				System.out.print(arr[i][j]+" ");
 			}
@@ -165,4 +172,13 @@ public class Main {
 		System.out.println();
 	}
 
+	static void printExit(boolean[][] arr) {
+		for(int i = 0; i <= R; i++) {
+			for(int j = 1; j <= C; j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
 }
