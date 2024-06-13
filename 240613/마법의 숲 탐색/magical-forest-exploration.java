@@ -23,7 +23,7 @@ public class Main {
 			int r = Integer.parseInt(st.nextToken());
 			int d = Integer.parseInt(st.nextToken());
 			
-			moveGolem(1, r, d, i); // 골렘 이동 함수 
+			moveGolem(0, r, d, i); // 골렘 이동 함수 
 		}
 		
 		bw.write(Integer.toString(total));
