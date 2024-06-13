@@ -91,7 +91,7 @@ public class Main {
 			int nr = r + check[i][0];
 			int nc = c + check[i][1];
 			
-			if(nr < 1 || nr > R || nc < 1 || nc > C) {
+			if(nr < 0 || nr > R || nc < 1 || nc > C) {
 				return false;
 			}
 			
