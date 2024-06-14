@@ -4,6 +4,7 @@ import java.io.*;
 public class Main {
 	
 	static int K, M, total;
+	static int[] position;
 	static int[][] map, origin, answer;
 	static PriorityQueue<int[]> queue;
 	static boolean[][] visited;
@@ -23,6 +24,7 @@ public class Main {
 		number = new LinkedList<>();
 		queue = new PriorityQueue<>((o1, o2) -> o1[1] == o2[1] ? o2[0] - o1[0] : o1[1] - o2[1]);
 		copyNum = new LinkedList<>();
+		position = new int[2];
 		
 		for(int i = 0; i < 5; i++) { // 맵 세팅 
 			st = new StringTokenizer(br.readLine());
@@ -79,7 +81,9 @@ public class Main {
 					
 					// 유물 수 구하기(BFS)
 					Queue<int[]> cnt = countRelics();
-					if(queue.size() < cnt.size() || (queue.size() == cnt.size() && t > k)) {
+					if(queue.size() < cnt.size() || (queue.size() == cnt.size() && t > k) ||
+							
+							(queue.size() == cnt.size() && t == k && position[1] == j && position[0] < i)) {
 						t = k;
 						queue.clear();
 						queue.addAll(cnt);
