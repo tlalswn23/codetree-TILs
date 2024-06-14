@@ -37,10 +37,11 @@ public class Main {
 			copyNum.add(Integer.parseInt(st.nextToken()));
 		}
 		
+		number.addAll(copyNum);
+		
 		for(int k = 0; k < K; k++) { // k번 만큼 반복
+			
 			total = 0;
-			number.clear();
-			number.addAll(copyNum);
 			queue.clear();
 			copyMap(origin, map);
 			
@@ -57,10 +58,10 @@ public class Main {
 			while(queue.size() > 2) {	
 				total += queue.size();
 				fullRelics(); // 유물 채우기 
-				queue.clear();
 				queue.addAll(countRelics());
 				copyMap(answer, map);
 			}
+			
 			bw.write(Integer.toString(total)+" ");
 		}
 		
